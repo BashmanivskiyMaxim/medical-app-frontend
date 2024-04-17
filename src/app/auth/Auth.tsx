@@ -35,6 +35,7 @@ export function Auth() {
 		onSuccess() {
 			toast.success('Successfully login!')
 			reset()
+			console.log('pushing to home')
 			push(DASHBOARD_PAGES.HOME)
 		}
 	})
@@ -62,7 +63,7 @@ export function Auth() {
 			>
 				<Heading
 					level={2}
-					title={isLoginForm ? 'Register' : 'Login'}
+					title={isLoginForm ? 'Login' : 'Register'}
 				/>
 				<Form.Item
 					label='Username'

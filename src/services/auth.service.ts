@@ -16,9 +16,7 @@ export const authService = {
 		return response
 	},
 	async getNewTokens() {
-		const response = await axiosWithoutAuth.post<IAuthResponse>(
-			'/auth/login/aceess-token'
-		)
+		const response = await axiosWithoutAuth.post<IAuthResponse>('/auth/refresh')
 		if (response.data.accessToken) {
 			saveTokenStorage(response.data.accessToken)
 		}

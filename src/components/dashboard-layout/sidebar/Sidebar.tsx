@@ -13,6 +13,8 @@ import Sider from 'antd/es/layout/Sider'
 import Link from 'next/link'
 import React, { useState } from 'react'
 
+import { LogoutButton } from './LogoutButton'
+
 type MenuItem = Required<MenuProps>['items'][number]
 
 function getItem(
@@ -34,10 +36,10 @@ const items: MenuItem[] = [
 	getItem('Статистика', '1', '/', <PieChartOutlined />),
 	getItem('Моніторинг', '2', '/', <DesktopOutlined />),
 	getItem('Профіль', 'sub1', '/', <UserOutlined />, [
-		getItem('Інформація', '3', '/'),
+		getItem('Інформація', '3', '/admin/profile'),
 		getItem('Healts API', '4', '/')
 	]),
-	getItem('Повідомлення', 'sub2', '/', <TeamOutlined />),
+	getItem('Повідомлення', 'sub2', '/admin/message', <TeamOutlined />),
 	getItem('Звіти', '9', '/', <FileOutlined />),
 	getItem('Параметри', '10', '/', <SettingFilled />)
 ]
@@ -51,10 +53,10 @@ const Sidebar = () => {
 				collapsed={collapsed}
 				onCollapse={value => setCollapsed(value)}
 			>
-				<div className='demo-logo-vertical' />
+				<LogoutButton />
 				<Menu
 					theme='dark'
-					defaultSelectedKeys={['1']}
+					defaultSelectedKeys={['3']}
 					mode='inline'
 					items={items}
 				/>

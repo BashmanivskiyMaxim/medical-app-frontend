@@ -1,14 +1,42 @@
-import type { Metadata } from 'next'
+'use client'
 
-import { Heading } from '@/components/Heading'
+import { Typography } from 'antd'
+import React from 'react'
 
-import { NO_INDEX_PAGE } from '@/constants/seo.constants'
+const { Title, Paragraph } = Typography
 
-export const metadata: Metadata = {
-	title: 'Dashboard',
-	...NO_INDEX_PAGE
+const DashboardPage = () => {
+	return (
+		<div className='dashboard-page'>
+			<Title level={1}>
+				Вітаємо на платформі планування Вашого часу перебування у нашому
+				пансіонаті!
+			</Title>
+			<Paragraph>
+				Ласкаво просимо до нашого веб-додатку для планування та організації
+				вашого перебування в нашому пансіонаті. Ми прагнемо зробити ваше
+				перебування тут найприємнішим і найзручнішим.
+			</Paragraph>
+			<Paragraph>
+				<ul>
+					<li>
+						<strong>Плануйте свої процедури:</strong> Виберіть з широкого вибору
+						процедур ті, які найбільше вам підходять та найбільше сприяють
+						вашому здоровю і благополуччю.
+					</li>
+					<li>
+						<strong>Створюйте розклади:</strong> Побудуйте ідеальний розклад для
+						себе, враховуючи ваші уподобання і графік перебування.
+					</li>
+					<li>
+						<strong>Отримуйте нагадування:</strong> Ми нагадаємо вам про ваші
+						процедури, щоб ви могли максимально насолоджуватися вашим часом у
+						нашому пансіонаті без зайвих переживань.
+					</li>
+				</ul>
+			</Paragraph>
+		</div>
+	)
 }
 
-export default function DashboardPage() {
-	return <>admin page</>
-}
+export default DashboardPage

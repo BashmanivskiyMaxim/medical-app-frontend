@@ -28,7 +28,6 @@ const DashboardLayout = ({ children }: PropsWithChildren<unknown>) => {
 						}}
 					>
 						{children}
-						Bill is a cat.
 					</div>
 				</Content>
 				<Footer style={{ textAlign: 'center' }}>

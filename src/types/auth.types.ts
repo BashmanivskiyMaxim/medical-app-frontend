@@ -7,6 +7,13 @@ export interface IUser {
 	id: string
 	username: string
 	name?: string
+	email?: string
+	createDate?: string
+	updatedDate?: string
+	lastLogin?: string
+	accountType?: string
+	firstName?: string
+	lastName?: string
 }
 
 export interface IAuthResponse {

@@ -1,23 +1,38 @@
-import React from "react";
-import { Button } from "antd";
-import "../styles/global.css";
+import { Button } from 'antd'
+import { redirect } from 'next/navigation'
+import React from 'react'
+
+import '../styles/global.css'
 
 const Home = () => {
-  return (
-    <section className="w-full flex-center flex-col">
-      <Button type="primary">Primary Button</Button>
-      <h1 className="head_text text-center">
-        Discover & Share
-        <br className="max-md:hidden" />
-        <span className="orange_gradient text-center"> AI-Powered Prompts</span>
-      </h1>
-      <p className="desc text-center">
-        <span className="blue_gradient">CreativAI</span> is an open-source AI
-        prompting tool for modern world to discover, create and share creative
-        prompts
-      </p>
-    </section>
-  );
-};
+	return (
+		<div className='welcome-page'>
+			<h1>
+				Вітаємо на платформі для планування Вашого часу перебування у нашому
+				пансіонаті!
+			</h1>
+			<p>
+				Ласкаво просимо до нашого веб-додатку для планування та організації
+				вашого перебування в нашому пансіонаті. Ми прагнемо зробити ваше
+				перебування тут найприємнішим і найзручнішим.
+			</p>
+			<p>
+				Що ви можете зробити тут: Плануйте свої процедури: Виберіть з широкого
+				вибору процедур ті, які найбільше вам підходять та найбільше сприяють
+				вашому здоровю і благополуччю. Створюйте розклади: Побудуйте ідеальний
+				розклад для себе, враховуючи ваші уподобання і графік перебування.
+				Отримуйте нагадування: Ми нагадаємо вам про ваші процедури, щоб ви могли
+				максимально насолоджуватися вашим часом у нашому пансіонаті без зайвих
+				переживань.
+			</p>
+			<Button
+				type='primary'
+				onClick={redirect('/auth')}
+			>
+				Go to Authorization Page
+			</Button>
+		</div>
+	)
+}
 
-export default Home;
+export default Home

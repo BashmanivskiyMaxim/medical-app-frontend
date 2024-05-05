@@ -6,17 +6,10 @@ stages:
   - test
   - deploy
 
-cache:
-  paths:
-    - node_modules/
-
 install_dependencies:
   stage: install_dependencies
   script:
     - npm install
-  artifacts:
-    paths:
-      - node_modules/
 
 test:
   stage: test

@@ -1,32 +1,26 @@
 image: node:alpine
 
 stages:
-  - install_dependencies
-  - build
   - test
+  - build
   - deploy
-
-install_dependencies:
-  stage: install_dependencies
-  script:
-    - npm install
-    - npm install next
 
 test:
   stage: test
   script:
+    - npm install
     - npm run test
 
 build:
   stage: build
   script:
+    - npm install
     - npm run build
 
 deploy:
   stage: deploy
   image: ubuntu
   only:
-    - pushes
     - master
   script:
     - apt-get update && apt-get install -y curl

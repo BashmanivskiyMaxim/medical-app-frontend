@@ -10,6 +10,7 @@ install_dependencies:
   stage: install_dependencies
   script:
     - npm install
+    - npm install next
 
 test:
   stage: test

@@ -1,5 +1,4 @@
 import { useQuery } from '@tanstack/react-query'
-import { message } from 'antd'
 
 import { messageService } from '@/services/message.service'
 

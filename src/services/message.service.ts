@@ -19,6 +19,10 @@ class MessageService {
 	async sendMessage(message: IMessageSend) {
 		await axiosWithAuth.post(this.SEND_URL, message)
 	}
+
+	async deleteMessage(id: string) {
+		await axiosWithAuth.delete(`/message/delete/${id}`)
+	}
 }
 
 export const messageService = new MessageService()

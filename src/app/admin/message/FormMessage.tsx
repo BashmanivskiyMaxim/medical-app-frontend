@@ -19,6 +19,7 @@ const FormMessage = () => {
 	return (
 		<>
 			<Button
+				className='mt-4'
 				type='primary'
 				onClick={handleOpenModal}
 			>
@@ -26,7 +27,7 @@ const FormMessage = () => {
 			</Button>
 			<Modal
 				title='Нове повідомлення'
-				visible={modalVisible}
+				open={modalVisible}
 				onCancel={handleCloseModal}
 				footer={null}
 			>

@@ -17,12 +17,12 @@ build:
     - npm install
     - npm run build
 
-deploy:
-  stage: deploy
-  image: ubuntu
-  only:
-    - master
-  script:
-    - apt-get update && apt-get install -y curl
-    - curl -fsSL https://railway.app/install.sh | sh
-    - railway up --service=$RAILWAY_SERVICE_NAME -d
+#deploy:
+#  stage: deploy
+#  image: ubuntu
+#  only:
+#    - master
+#  script:
+#    - apt-get update && apt-get install -y curl
+#    - curl -fsSL https://railway.app/install.sh | sh
+#    - railway up --service=$RAILWAY_SERVICE_NAME -d

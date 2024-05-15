@@ -8,12 +8,15 @@ import {
 	TeamOutlined,
 	UserOutlined
 } from '@ant-design/icons'
+import { LogoutOutlined } from '@ant-design/icons'
+import { useMutation } from '@tanstack/react-query'
 import { Menu, MenuProps } from 'antd'
 import Sider from 'antd/es/layout/Sider'
 import Link from 'next/link'
+import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
-import { LogoutButton } from './LogoutButton'
+import { authService } from '@/services/auth.service'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -32,19 +35,33 @@ function getItem(
 	} as MenuItem
 }
 
-const items: MenuItem[] = [
-	getItem('Статистика', '1', '/', <PieChartOutlined />),
-	getItem('Моніторинг', '2', '/', <DesktopOutlined />),
-	getItem('Профіль', 'sub1', '/', <UserOutlined />, [
-		getItem('Інформація', '3', '/admin/profile'),
-		getItem('Healts API', '4', '/')
-	]),
-	getItem('Повідомлення', 'sub2', '/admin/message', <TeamOutlined />),
-	getItem('Звіти', '9', '/', <FileOutlined />),
-	getItem('Параметри', '10', '/', <SettingFilled />)
-]
-
 const Sidebar = () => {
+	const router = useRouter()
+
+	const { mutate } = useMutation({
+		mutationKey: ['logout'],
+		mutationFn: () => authService.logout(),
+		onSuccess: () => router.push('/auth')
+	})
+
+	const items: MenuItem[] = [
+		getItem('Статистика', '1', '/', <PieChartOutlined />),
+		getItem('Моніторинг', '2', '/', <DesktopOutlined />),
+		getItem('Профіль', 'sub1', '/', <UserOutlined />, [
+			getItem('Інформація', '3', '/admin/profile'),
+			getItem('Healts API', '4', '/')
+		]),
+		getItem('Повідомлення', 'sub2', '/admin/message', <TeamOutlined />),
+		getItem('Звіти', '9', '/', <FileOutlined />),
+		getItem('Параметри', '10', '/', <SettingFilled />),
+		{
+			key: 'logout',
+			icon: <LogoutOutlined />,
+			label: 'Вийти',
+			onClick: () => mutate()
+		}
+	]
+
 	const [collapsed, setCollapsed] = useState(false)
 	return (
 		<>
@@ -53,7 +70,6 @@ const Sidebar = () => {
 				collapsed={collapsed}
 				onCollapse={value => setCollapsed(value)}
 			>
-				<LogoutButton />
 				<Menu
 					theme='dark'
 					defaultSelectedKeys={['3']}

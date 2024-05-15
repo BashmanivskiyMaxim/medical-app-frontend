@@ -31,7 +31,7 @@ const DashboardLayout = ({ children }: PropsWithChildren<unknown>) => {
 					</div>
 				</Content>
 				<Footer style={{ textAlign: 'center' }}>
-					Procedure Planner ©{new Date().getFullYear()} Created by Max
+					Procedure Planner ©{new Date().getFullYear()} Створено Максимом Башманівським
 				</Footer>
 			</Layout>
 		</Layout>

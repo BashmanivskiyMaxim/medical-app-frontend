@@ -16,87 +16,95 @@ import { DASHBOARD_PAGES } from '@/config/pages-url.config'
 
 import { authService } from '@/services/auth.service'
 
-type FieldType = {
-	username?: string
-	password?: string
-}
-
 export function Auth() {
-	const { handleSubmit, reset, control } = useForm<IAuthForm>({
+	const {
+		handleSubmit,
+		reset,
+		control,
+		formState: { errors }
+	} = useForm<IAuthForm>({
 		mode: 'onChange'
 	})
-	const [isLoginForm, setIsLoginForm] = useState(true)
 	const { push } = useRouter()
 
 	const { mutate } = useMutation({
 		mutationKey: ['auth'],
-		mutationFn: (data: IAuthForm) =>
-			authService.main(isLoginForm ? 'login' : 'register', data),
+		mutationFn: (data: IAuthForm) => authService.main(data),
 		onSuccess() {
-			toast.success('Successfully login!')
+			toast.success('Успішна автентифікація!')
 			reset()
-			console.log('pushing to home')
 			push(DASHBOARD_PAGES.HOME)
+		},
+		onError(error) {
+			toast.error(error.message)
 		}
 	})
 
 	const onSubmit: SubmitHandler<IAuthForm> = data => {
-		console.log(process.env.BACKEND_API_URL)
-		console.log(data)
 		mutate(data)
 	}
 
 	return (
-		<div
-			style={{
-				display: 'flex',
-				justifyContent: 'center',
-				alignItems: 'center',
-				minHeight: '100vh'
-			}}
-		>
+		
 			<Form
-				className='login-form'
+				className='w-full max-w-sm'
 				onFinish={handleSubmit(onSubmit)}
-				style={{ maxWidth: 600 }}
 				name='normal_login'
 			>
 				<Heading
 					level={2}
-					title={isLoginForm ? 'Login' : 'Register'}
+					title={'Увійти'}
 				/>
 				<Form.Item
-					label='Username'
-					rules={[{ required: true, message: 'Please enter your username' }]}
+					label='Нікнейм'
+					validateStatus={errors.username ? 'error' : ''}
+					help={errors.username && errors.username.message}
 				>
 					<Controller
+						rules={{
+							required: 'Будь-ласка введіть ваш нікнейм',
+							minLength: {
+								value: 4,
+								message: 'Нікнейм повинен містити принаймні 4 символи'
+							}
+						}}
 						control={control}
 						name='username'
 						render={({ field }) => (
 							<Input
 								{...field}
-								placeholder='Enter your username'
+								placeholder='Введіть ваш нікнейм'
 								prefix={<UserOutlined className='site-form-item-icon' />}
+								className='w-full py-2 px-3 rounded leading-tight focus:outline-none focus:shadow-outline'
 							/>
 						)}
 					/>
 				</Form.Item>
-
 				<Form.Item
-					label='Password'
+					label='Пароль'
 					rules={[
-						{ required: true, message: 'Please enter your password' }
-						//{ min: 6, message: 'Password must be at least 6 characters long' }
+						{ required: true, message: 'Будь-ласка введіть ваш пароль' },
+						{ min: 6, message: 'Пароль повинен містити принаймні 6 символів' }
 					]}
+					validateStatus={errors.password ? 'error' : ''}
+					help={errors.password && errors.password.message}
 				>
 					<Controller
+						rules={{
+							required: 'Будь-ласка введіть ваш пароль',
+							minLength: {
+								value: 6,
+								message: 'Пароль повинен містити принаймні 6 символів'
+							}
+						}}
 						control={control}
 						name='password'
 						render={({ field }) => (
 							<Input.Password
 								{...field}
-								placeholder='Enter your password'
+								placeholder='Введіть ваш пароль'
 								prefix={<LockOutlined className='site-form-item-icon' />}
+								className='w-full py-2 px-3 rounded leading-tight focus:outline-none focus:shadow-outline'
 							/>
 						)}
 					/>
@@ -106,12 +114,12 @@ export function Auth() {
 					<Button
 						type='primary'
 						htmlType='submit'
+						className='w-full py-2 px-4 rounded'
 					>
-						Submit
+						{'Увійти'}
 					</Button>{' '}
-					Or <a href=''>register now!</a>
 				</Form.Item>
 			</Form>
-		</div>
+		
 	)
 }

@@ -3,8 +3,7 @@ import { Metadata } from 'next'
 import React from 'react'
 import { Toaster } from 'sonner'
 
-import '../styles/global.css'
-
+import './globals.scss'
 import { Providers } from './providers'
 
 export const metadata: Metadata = {

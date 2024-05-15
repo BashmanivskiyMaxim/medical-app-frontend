@@ -8,7 +8,7 @@ import Loader from '@/components/Loader'
 
 import { useProfile } from '@/hooks/useProfile'
 
-const { Title, Text } = Typography
+const { Title } = Typography
 
 const Profile = () => {
 	const { data, isLoading } = useProfile()
@@ -24,75 +24,75 @@ const Profile = () => {
 		: 'No date'
 
 	return (
-		<Card title='Ваш профіль'>
+		<Card title={<Title level={2}>Профіль</Title>}>
 			<Row gutter={[16, 16]}>
 				<Col span={24}>
 					<Row>
 						<Col span={6}>
-							<Title level={4}>Username:</Title>
+							<Title level={3}>Унікальне ім'я:</Title>
 						</Col>
 						<Col span={18}>
-							<Text>{data?.data.username}</Text>
+							<Title level={4}>{data?.data.username}</Title>
 						</Col>
 					</Row>
 				</Col>
 				<Col span={24}>
 					<Row>
 						<Col span={6}>
-							<Title level={4}>Email:</Title>
+							<Title level={3}>Email:</Title>
 						</Col>
 						<Col span={18}>
-							<Text>{data?.data.email}</Text>
+							<Title level={4}>{data?.data.email}</Title>
 						</Col>
 					</Row>
 				</Col>
 				<Col span={24}>
 					<Row>
 						<Col span={6}>
-							<Title level={4}>Імя:</Title>
+							<Title level={3}>Імя:</Title>
 						</Col>
 						<Col span={18}>
-							<Text>{data?.data.firstName}</Text>
+							<Title level={4}>{data?.data.firstName}</Title>
 						</Col>
 					</Row>
 				</Col>
 				<Col span={24}>
 					<Row>
 						<Col span={6}>
-							<Title level={4}>Прізвище:</Title>
+							<Title level={3}>Прізвище:</Title>
 						</Col>
 						<Col span={18}>
-							<Text>{data?.data.lastName}</Text>
+							<Title level={4}>{data?.data.lastName}</Title>
 						</Col>
 					</Row>
 				</Col>
 				<Col span={24}>
 					<Row>
 						<Col span={6}>
-							<Title level={4}>Тип акаунту:</Title>
+							<Title level={3}>Тип акаунту:</Title>
 						</Col>
 						<Col span={18}>
-							<Text>{data?.data.accountType}</Text>
+							<Title level={4}>{data?.data.accountType}</Title>
 						</Col>
 					</Row>
 				</Col>
 				<Col span={24}>
 					<Row>
 						<Col span={6}>
-							<Title level={4}>Дата реєстрації:</Title>
+							<Title level={3}>Дата реєстрації:</Title>
 						</Col>
 						<Col span={18}>
-							<Text>{formattedCreateDate}</Text>
+							<Title level={4}>{formattedCreateDate}</Title>
 						</Col>
 					</Row>
 				</Col>
 				<Col span={24}>
 					<Row>
 						<Col span={6}>
-							<Title level={4}>Дата останнього входу:</Title>
+							<Title level={3}>Дата останнього входу:</Title>
 						</Col>
 						<Col span={18}>
-							<Text>{formattedLastLogin}</Text>
+							<Title level={4}>{formattedLastLogin}</Title>
 						</Col>
 					</Row>
 				</Col>

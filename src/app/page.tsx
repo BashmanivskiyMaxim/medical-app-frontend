@@ -2,8 +2,6 @@ import { Button } from 'antd'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
-import '../styles/global.css'
-
 const Home = () => {
 	return (
 		<div className='welcome-page'>

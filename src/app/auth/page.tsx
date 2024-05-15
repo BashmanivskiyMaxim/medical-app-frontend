@@ -1,8 +1,9 @@
 import { Metadata } from 'next'
+import { useState } from 'react'
 
 import { NO_INDEX_PAGE } from '@/constants/seo.constants'
 
-import { Auth } from './Auth'
+import UniForm from './UniForm'
 
 export const metadata: Metadata = {
 	title: 'Authenticate',
@@ -10,5 +11,5 @@ export const metadata: Metadata = {
 }
 
 export default function AuthPage() {
-	return <Auth />
+	return <UniForm />
 }

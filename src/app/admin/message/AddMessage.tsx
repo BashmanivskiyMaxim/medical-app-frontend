@@ -4,15 +4,17 @@ import React from 'react'
 import { IMessageSend } from '@/types/message.types'
 
 import { useCreateMessage } from '@/hooks/useCreateMessage'
+import { toast } from 'sonner'
 
 const AddMessageForm = ({ onClose }: any) => {
 	const [form] = Form.useForm()
 	const { createMessage } = useCreateMessage()
 
-	const onFinish = async (values: IMessageSend) => {
+	const onFinish = async (message: IMessageSend) => {
 		try {
-			await createMessage(values)
-			console.log('Повідомлення успішно надіслано!')
+			createMessage(message)
+			form.resetFields()
+			toast.success('Повідомлення успішно надіслано!')
 			onClose()
 		} catch (error) {
 			console.error('Помилка при надсиланні повідомлення:', error)

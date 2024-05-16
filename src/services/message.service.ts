@@ -23,6 +23,11 @@ class MessageService {
 	async deleteMessage(id: string) {
 		await axiosWithAuth.delete(`/message/delete/${id}`)
 	}
+
+	async deleteMessageForReceiver(id: string) {
+		await axiosWithAuth.patch(`/message/deleteForReceiver/${id}`)
+	
+	}
 }
 
 export const messageService = new MessageService()

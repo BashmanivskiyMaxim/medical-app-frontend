@@ -45,7 +45,7 @@ const Message = () => {
     const queryClient = useQueryClient();
     const { mutate } = useMutation({
         mutationKey: ['message'],
-        mutationFn: (data: string) => messageService.deleteMessage(data),
+        mutationFn: (data: string) => messageService.deleteMessageForReceiver(data),
         onSuccess() {
             toast.success('Повідомлення видалено!');
             queryClient.invalidateQueries({ queryKey: ['messages'] });

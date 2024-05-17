@@ -3,6 +3,7 @@ import { Card, Rate } from 'antd';
 import TimeReceptionModal from './TimeReceptionModal';
 
 export interface ProcedureItemProps {
+    id: string
     procName: string ;
     procDesc: string 
     averageRating: number
@@ -11,6 +12,7 @@ export interface ProcedureItemProps {
 }
 
 const ProcedureItem: React.FC<ProcedureItemProps> = ({
+    id,
     procName,
     procDesc,
     averageRating,
@@ -25,10 +27,10 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
                 className="shadow-md p-4 m-6 rounded-md"
             >
                 <p className='mb-4'>{procDesc}</p>
-                <p className='mb-4'>Оцінка:</p><Rate disabled defaultValue={averageRating} />
+                <p className='mb-4'>Вподобання:</p><Rate disabled defaultValue={averageRating} />
                 <p className='mb-4'>Лікар: {specialty}</p>
                 <p className='mb-4'>Кваліфікація: {qualification}</p>
-                <TimeReceptionModal />
+                <TimeReceptionModal id={id}/>
             </Card>
         </div>
     );

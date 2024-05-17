@@ -8,7 +8,7 @@ const Loader: React.FC = () => {
 				display: 'flex',
 				justifyContent: 'center',
 				alignItems: 'center',
-				height: '100vh'
+				height: '50vh'
 			}}
 		>
 			<Spin size='large' />

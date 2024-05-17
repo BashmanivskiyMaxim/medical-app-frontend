@@ -1,37 +1,46 @@
-'use client'
-
 import { Button, Modal } from 'antd'
 import React, { useState } from 'react'
 
+import Loader from '@/components/Loader'
+
+import { usePatientProcedureToday } from '@/hooks/usePatientProcedureToday'
+
 import TimeReceptionList from './TimeReceptionList'
 
-const TimeReceptionModal = () => {
+interface TimeReceptionModalProps {
+	id: string
+}
+
+const TimeReceptionModal = ({ id }: TimeReceptionModalProps) => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
+	const { data } = usePatientProcedureToday(id, isModalOpen)
 
-	const showModal = () => {
-		setIsModalOpen(true)
-	}
+	const sortedTimes =
+		data?.data
+			?.map((item: any) => ({
+				id: item.procedureTime.id,
+				appointmentTime: item.procedureTime.appointmentTime
+			}))
+			.sort((a, b) => a.appointmentTime.localeCompare(b.appointmentTime)) ?? []	
 
-	const handleCancel = () => {
-		setIsModalOpen(false)
-	}
+	const handleOpenModal = () => setIsModalOpen(true)
+	const handleCloseModal = () => setIsModalOpen(false)
+
 	return (
 		<div>
 			<Button
 				type='primary'
-				onClick={showModal}
+				onClick={handleOpenModal}
 			>
 				Записатись
 			</Button>
 			<Modal
 				title='Запис'
 				open={isModalOpen}
-				onCancel={handleCancel}
-                footer={null}
+				onCancel={handleCloseModal}
+				footer={null}
 			>
-				<TimeReceptionList
-					times={['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00', '20:00', '21:00']}
-				/>
+				{data ? <TimeReceptionList times={sortedTimes} /> : <Loader />}
 			</Modal>
 		</div>
 	)

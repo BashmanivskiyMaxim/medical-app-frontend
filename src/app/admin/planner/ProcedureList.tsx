@@ -23,6 +23,7 @@ const ProcedureList: React.FC = () => {
 						key={index}
 					>
 						<ProcedureItem
+							id={procedure.id || '0'}
 							procName={procedure.procedureName || "Процедура"}
 							procDesc={procedure.procedureDescription || "Опис процедури"}
 							averageRating={procedure.averageRating || 0}

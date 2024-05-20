@@ -23,6 +23,12 @@ export interface IUser {
 	lastName?: string
 }
 
+export interface IUserDoctor {
+	email: string
+	firstName: string
+	lastName: string
+}
+
 export interface IAuthResponse {
 	user: IUser
 	accessToken: string

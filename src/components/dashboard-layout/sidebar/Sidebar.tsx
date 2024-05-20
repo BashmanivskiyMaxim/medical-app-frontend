@@ -6,7 +6,8 @@ import {
 	PieChartOutlined,
 	SettingFilled,
 	TeamOutlined,
-	UserOutlined
+	UserOutlined,
+	CalendarOutlined,
 } from '@ant-design/icons'
 import { LogoutOutlined } from '@ant-design/icons'
 import { useMutation } from '@tanstack/react-query'
@@ -17,6 +18,7 @@ import { useRouter } from 'next/navigation'
 import React, { useState } from 'react'
 
 import { authService } from '@/services/auth.service'
+import { get } from 'http'
 
 type MenuItem = Required<MenuProps>['items'][number]
 
@@ -47,6 +49,7 @@ const Sidebar = () => {
 	const items: MenuItem[] = [
 		getItem('Статистика', '1', '/', <PieChartOutlined />),
 		getItem('Планування', '2', '/admin/planner', <DesktopOutlined />),
+		getItem('Мої процедури', '/', '/admin/myProcedures', <CalendarOutlined />),
 		getItem('Профіль', 'sub1', '/', <UserOutlined />, [
 			getItem('Інформація', '3', '/admin/profile'),
 			getItem('Healts API', '4', '/')

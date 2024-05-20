@@ -47,7 +47,7 @@ export function Auth() {
 	return (
 		
 			<Form
-				className='w-full max-w-sm'
+				className='w-full max-w-sm min-w-80'
 				onFinish={handleSubmit(onSubmit)}
 				name='normal_login'
 			>
@@ -65,7 +65,7 @@ export function Auth() {
 							required: 'Будь-ласка введіть ваш нікнейм',
 							minLength: {
 								value: 4,
-								message: 'Нікнейм повинен містити принаймні 4 символи'
+								message: 'Нікнейм має містити щонайменше 4 символи'
 							}
 						}}
 						control={control}

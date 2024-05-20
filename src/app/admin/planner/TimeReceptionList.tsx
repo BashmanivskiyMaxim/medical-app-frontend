@@ -5,6 +5,7 @@ import TimeReception from './TimeReception'
 
 interface TimeReceptionListProps {
 	times: { id: string; appointmentTime: string }[]
+	procedureId: string
 }
 
 const chunk = (array: any[], size: number): any[][] => {
@@ -18,7 +19,7 @@ const chunk = (array: any[], size: number): any[][] => {
 	}, [])
 }
 
-const TimeReceptionList: React.FC<TimeReceptionListProps> = ({ times }) => {
+const TimeReceptionList: React.FC<TimeReceptionListProps> = ({ times, procedureId }) => {
 	const timeChunks = chunk(times, 6)
 	const tableData = timeChunks.map((chunk, index) => ({
 		key: index,
@@ -41,6 +42,7 @@ const TimeReceptionList: React.FC<TimeReceptionListProps> = ({ times }) => {
 								id={time.id}
 								date={time.appointmentTime}
 								active={false}
+								procedureId={procedureId}
 							/>
 						</div>
 					))}

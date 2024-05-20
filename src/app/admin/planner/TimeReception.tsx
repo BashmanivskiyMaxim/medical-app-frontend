@@ -1,28 +1,39 @@
 'use client'
 
-import { useMutation } from '@tanstack/react-query'
-import { Button, TimePicker } from 'antd'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { Button, Modal, TimePicker } from 'antd'
 import moment from 'moment'
-import React from 'react'
+import React, { useState } from 'react'
+import { toast } from 'sonner'
 
 import { patientProcedureService } from '@/services/patientProcedure.service'
-import { toast } from 'sonner'
 
 interface TimeReceptionProps {
 	date: string
 	id: string
 	active: boolean
+	procedureId: string
 }
 
-const TimeReception = ({ date, id, active }: TimeReceptionProps) => {
+const TimeReception = ({
+	date,
+	id,
+	active,
+	procedureId
+}: TimeReceptionProps) => {
+	const queryClient = useQueryClient()
+	const [isModalOpen, setIsModalOpen] = useState(false)
 	const currentTime = moment()
 	const buttonTime = moment(date, 'HH:mm')
 	const isTimePassed = currentTime.isBefore(buttonTime.add(30, 'minutes'))
 	const { mutate } = useMutation({
-		mutationKey: ['auth'],
+		mutationKey: ['pickPatientProcedureTime'],
 		mutationFn: (id: string) =>
 			patientProcedureService.pickPatientProcedureTime(id),
 		onSuccess() {
+			queryClient.invalidateQueries({
+				queryKey: ['patientProceduresToday', { id: procedureId }]
+			})
 			toast.success('Ви успішно записались на процедуру!')
 		},
 		onError(error) {
@@ -30,15 +41,41 @@ const TimeReception = ({ date, id, active }: TimeReceptionProps) => {
 		}
 	})
 
+	const handleButtonClick = () => {
+		setIsModalOpen(true)
+	}
+
+	const handleOk = () => {
+		mutate(id)
+		setIsModalOpen(false)
+	}
+
+	const handleCancel = () => {
+		setIsModalOpen(false)
+	}
+
 	return (
 		<>
 			<Button
-				onClick={() => mutate(id)}
+				onClick={handleButtonClick}
 				disabled={active || isTimePassed}
 				style={isTimePassed ? { color: 'gray' } : {}}
 			>
 				{date}
 			</Button>
+			<Modal
+				title='Попередження'
+				open={isModalOpen}
+				onOk={handleOk}
+				onCancel={handleCancel}
+				cancelText='Скасувати'
+				okText='Записатись'
+			>
+				<p>
+					Якщо ви записані на процедуру на інший час в цей день, попередній ваш
+					запис відміниться. Ви впевнені, що хочете продовжити?
+				</p>
+			</Modal>
 		</>
 	)
 }

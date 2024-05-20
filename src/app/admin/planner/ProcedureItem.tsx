@@ -1,39 +1,54 @@
-import React from 'react';
-import { Card, Rate } from 'antd';
-import TimeReceptionModal from './TimeReceptionModal';
+import { Card, Rate } from 'antd'
+import React from 'react'
+
+import TimeReceptionModal from './TimeReceptionModal'
 
 export interface ProcedureItemProps {
-    id: string
-    procName: string ;
-    procDesc: string 
-    averageRating: number
-    specialty: string
-    qualification: string
+	id: string
+	procName: string
+	procDesc: string
+	averageRating: number
+	specialty: string
+	qualification: string
 }
 
 const ProcedureItem: React.FC<ProcedureItemProps> = ({
-    id,
-    procName,
-    procDesc,
-    averageRating,
-    specialty,
-    qualification,
+	id,
+	procName,
+	procDesc,
+	averageRating,
+	specialty,
+	qualification
 }: ProcedureItemProps) => {
-    return (
-        <div>
-            <Card
-                title={procName}
-                style={{ maxWidth: 400 }}
-                className="shadow-md p-4 m-6 rounded-md"
-            >
-                <p className='mb-4'>{procDesc}</p>
-                <p className='mb-4'>Вподобання:</p><Rate disabled defaultValue={averageRating} />
-                <p className='mb-4'>Лікар: {specialty}</p>
-                <p className='mb-4'>Кваліфікація: {qualification}</p>
-                <TimeReceptionModal id={id}/>
-            </Card>
-        </div>
-    );
-};
+	return (
+		<div className='flex justify-center my-4'>
+			<Card
+				title={<span className='text-xl font-semibold'>{procName}</span>}
+				style={{ maxWidth: 400 }}
+				className='shadow-lg p-6 m-4 rounded-lg border border-gray-200'
+			>
+				<p className='text-black mb-4'>{procDesc}</p>
+				<div className='text-black mb-4'>
+					<span className='font-bold'>Вподобання:</span>
+					<div className='mt-2'>
+						<Rate
+							disabled
+							defaultValue={averageRating}
+						/>
+					</div>
+				</div>
+				<p className='text-black mb-4'>
+					<span className='font-bold'>Лікар:</span> {specialty}
+				</p>
+				<p className='text-black mb-4'>
+					<span className='font-bold'>Кваліфікація:</span> {qualification}
+				</p>
+				<div className='mt-4'>
+					<TimeReceptionModal id={id} />
+				</div>
+			</Card>
+		</div>
+	)
+}
 
-export default ProcedureItem;
+export default ProcedureItem

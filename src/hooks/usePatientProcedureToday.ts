@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query"
 
 export function usePatientProcedureToday(id: string, enabled: boolean) {
     const { data, isLoading, isSuccess } = useQuery({
-        queryKey: ['patientProcedures'],
+        queryKey: ['patientProceduresToday', { id }],
         queryFn: () => patientProcedureService.getTodayPatientProceduresById(id),
         enabled,
     });

@@ -25,7 +25,6 @@ const TimeReceptionModal = ({ id }: TimeReceptionModalProps) => {
 
 	const handleOpenModal = () => setIsModalOpen(true)
 	const handleCloseModal = () => setIsModalOpen(false)
-
 	return (
 		<div>
 			<Button
@@ -40,7 +39,8 @@ const TimeReceptionModal = ({ id }: TimeReceptionModalProps) => {
 				onCancel={handleCloseModal}
 				footer={null}
 			>
-				{data ? <TimeReceptionList times={sortedTimes} /> : <Loader />}
+				
+				{data ? <TimeReceptionList times={sortedTimes} procedureId={id}/> : <Loader />}
 			</Modal>
 		</div>
 	)

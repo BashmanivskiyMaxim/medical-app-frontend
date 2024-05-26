@@ -9,10 +9,16 @@ import { axiosWithAuth } from '@/api/interceptors'
 class PatientProcedureService {
 	private ROOT_URL = '/patientProcedure/'
 
-	async getTodayPatientProceduresById(id: string) {
+	async getPatientProceduresByDate(
+		id: string,
+		date: string | null
+	): Promise<IPatientProcedureTimes> {
 		try {
 			const response = await axiosWithAuth.get<IPatientProcedureTimes>(
-				`${this.ROOT_URL}todayProcedures/${id}`
+				`${this.ROOT_URL}todayProcedures/${id}`,
+				{
+					params: { date }
+				}
 			)
 			return response.data
 		} catch (error: any) {
@@ -50,6 +56,22 @@ class PatientProcedureService {
 			await axiosWithAuth.patch(`${this.ROOT_URL}rate/${id}`, {
 				rating
 			})
+		} catch (error: any) {
+			throw new Error(error.response.data.message)
+		}
+	}
+
+	async scheduleMyDay() {
+		try {
+			await axiosWithAuth.patch(`${this.ROOT_URL}scheduleMyDay`)
+		} catch (error: any) {
+			throw new Error(error.response.data.message)
+		}
+	}
+
+	async cancelPatientProcedure(id: string) {
+		try {
+			await axiosWithAuth.patch(`${this.ROOT_URL}cancel/${id}`)
 		} catch (error: any) {
 			throw new Error(error.response.data.message)
 		}

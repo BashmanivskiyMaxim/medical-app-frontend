@@ -13,19 +13,21 @@ interface TimeReceptionProps {
 	id: string
 	active: boolean
 	procedureId: string
+	appointmentDate: string
 }
 
 const TimeReception = ({
 	date,
 	id,
 	active,
-	procedureId
+	procedureId,
+	appointmentDate
 }: TimeReceptionProps) => {
 	const queryClient = useQueryClient()
 	const [isModalOpen, setIsModalOpen] = useState(false)
 	const currentTime = moment()
-	const buttonTime = moment(date, 'HH:mm')
-	const isTimePassed = currentTime.isBefore(buttonTime.add(30, 'minutes'))
+	const buttonTime = moment(`${appointmentDate} ${date}`, 'YYYY-MM-DD HH:mm')
+	const isTimePassed = currentTime.isAfter(buttonTime.add(30, 'minutes'))
 	const { mutate } = useMutation({
 		mutationKey: ['pickPatientProcedureTime'],
 		mutationFn: (id: string) =>
@@ -37,7 +39,10 @@ const TimeReception = ({
 			toast.success('Ви успішно записались на процедуру!')
 		},
 		onError(error) {
-			toast.error(error.message)
+			toast.error(
+				error.message ||
+					'Не вдалося записатись на процедуру. Спробуйте пізніше.'
+			)
 		}
 	})
 

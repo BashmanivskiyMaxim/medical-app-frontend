@@ -1,4 +1,5 @@
-import { Button, Modal } from 'antd'
+import { Button, DatePicker, Modal } from 'antd'
+import moment from 'moment'
 import React, { useState } from 'react'
 
 import Loader from '@/components/Loader'
@@ -13,23 +14,47 @@ interface TimeReceptionModalProps {
 
 const TimeReceptionModal = ({ id }: TimeReceptionModalProps) => {
 	const [isModalOpen, setIsModalOpen] = useState(false)
-	const { data } = usePatientProcedureToday(id, isModalOpen)
+	const [selectedDate, setSelectedDate] = useState<moment.Moment | null>(null)
+	const { data } = usePatientProcedureToday(id, selectedDate, isModalOpen)
 
 	const sortedTimes =
 		data?.data
 			?.map((item: any) => ({
-				id: item.procedureTime.id,
-				appointmentTime: item.procedureTime.appointmentTime
+				id: item.id,
+				appointmentDate: item.appointmentDate,
+				appointmentTime: item.appointmentTime
 			}))
-			.sort((a, b) => a.appointmentTime.localeCompare(b.appointmentTime)) ?? []	
+			.sort((a, b) => a.appointmentTime.localeCompare(b.appointmentTime)) ?? []
 
-	const handleOpenModal = () => setIsModalOpen(true)
+	const handleOpenModal = () => {
+		if (selectedDate) {
+			setIsModalOpen(true)
+		} else {
+			alert('Будь ласка, виберіть дату для запису.')
+		}
+	}
+
 	const handleCloseModal = () => setIsModalOpen(false)
+
+	const handleDateChange = (date: moment.Moment | null) => {
+		setSelectedDate(date)
+	}
+
 	return (
 		<div>
+			<DatePicker
+				onChange={handleDateChange}
+				disabledDate={current =>
+					current &&
+					(current < moment().startOf('day') ||
+						current > moment().add(3, 'days').endOf('day'))
+				}
+			/>
 			<Button
+				className='ml-4'
 				type='primary'
 				onClick={handleOpenModal}
+				disabled={!selectedDate}
 			>
 				Записатись
 			</Button>
@@ -39,8 +64,14 @@ const TimeReceptionModal = ({ id }: TimeReceptionModalProps) => {
 				onCancel={handleCloseModal}
 				footer={null}
 			>
-				
-				{data ? <TimeReceptionList times={sortedTimes} procedureId={id}/> : <Loader />}
+				{data ? (
+					<TimeReceptionList
+						times={sortedTimes}
+						procedureId={id}
+					/>
+				) : (
+					<Loader />
+				)}
 			</Modal>
 		</div>
 	)

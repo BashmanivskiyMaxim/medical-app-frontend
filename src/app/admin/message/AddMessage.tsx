@@ -17,7 +17,7 @@ const AddMessageForm = ({ onClose }: any) => {
 			toast.success('Повідомлення успішно надіслано!')
 			onClose()
 		} catch (error) {
-			console.error('Помилка при надсиланні повідомлення:', error)
+			toast.error('Помилка при надсиланні повідомлення')
 		}
 	}
 

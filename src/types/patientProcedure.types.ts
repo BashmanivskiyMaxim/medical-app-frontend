@@ -17,7 +17,8 @@ export interface IPatientProcedureResponse {
 
 export interface ITimes {
 	id: string
-	procedureTime: string
+	appointmentTime: string
+	appointmentDate: string
 }
 
 export interface IPatientProcedureTimes {
@@ -36,6 +37,7 @@ export interface ProcedureReport {
 }
 
 export interface ProcedureForPatient {
+	id: string
 	doctor: IDoctorDetails
 	procedure: IProcedureForPatient
 	procedureDate: string

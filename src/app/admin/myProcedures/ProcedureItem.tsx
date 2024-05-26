@@ -1,8 +1,12 @@
-import { Card, Rate } from 'antd'
+import { patientProcedureService } from '@/services/patientProcedure.service'
+import { useMutation } from '@tanstack/react-query'
+import { Button, Card, Rate } from 'antd'
 import dayjs from 'dayjs'
 import React from 'react'
+import { toast } from 'sonner'
 
 export interface ProcedureItemProps {
+	id: string
 	doctor: {
 		specialty: string
 		qualification: string
@@ -23,15 +27,22 @@ export interface ProcedureItemProps {
 		report: string
 	}
 	rating: number
+	onCancel?: (procedureId: string) => void
+	showCancelButton?: boolean
+	isRatingDisabled?: boolean
 }
 
 const ProcedureItem: React.FC<ProcedureItemProps> = ({
+	id,
 	doctor,
 	procedure,
 	procedureDate,
 	appointmentTime,
 	report,
-	rating
+	rating,
+	onCancel,
+	showCancelButton = false,
+	isRatingDisabled = true
 }) => {
 	const now = dayjs()
 	const procedureDateTime = dayjs(`${procedureDate}T${appointmentTime}`)
@@ -48,6 +59,26 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
 		cardClass += ' border-green-400 bg-green-100'
 	} else if (isFuture) {
 		cardClass += ' border-blue-400 bg-blue-100'
+	}
+
+	const { mutate: rateProcedure } = useMutation({
+		mutationFn: (newRating: number) => patientProcedureService.rateProcedure(id, newRating),
+		onSuccess: () => {
+		  toast.success('Рейтинг успішно оновлено!');
+		},
+		onError: (error: any) => {
+		  toast.error(`Не вдалося оновити рейтинг: ${error.message}`);
+		},
+	  });
+	
+	  const handleRatingChange = (newRating: number) => {
+		rateProcedure(newRating);
+	  };
+
+	const handleCancel = () => {
+		if (onCancel) {
+			onCancel(id)
+		}
 	}
 
 	return (
@@ -93,10 +124,20 @@ const ProcedureItem: React.FC<ProcedureItemProps> = ({
 					</div>
 					<div className='text-black mb-2'>
 						<Rate
-							disabled
+							disabled={isRatingDisabled}
 							defaultValue={rating}
+							onChange={handleRatingChange}
 						/>
 					</div>
+					{showCancelButton && (
+						<Button
+							type='primary'
+							danger
+							onClick={handleCancel}
+						>
+							Скасувати запис
+						</Button>
+					)}
 				</Card>
 			</div>
 		</div>
